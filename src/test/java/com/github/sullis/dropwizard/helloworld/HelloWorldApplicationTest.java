@@ -3,6 +3,8 @@ package com.github.sullis.dropwizard.helloworld;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
+import org.bhcs.BHCSApplication;
+import org.bhcs.configuration.BHCSConfiguration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -14,8 +16,8 @@ import static io.restassured.RestAssured.given;
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class HelloWorldApplicationTest {
 
-  private static final DropwizardAppExtension<HelloWorldConfiguration> EXT = new DropwizardAppExtension<>(
-          HelloWorldApplication.class,
+  private static final DropwizardAppExtension<BHCSConfiguration> EXT = new DropwizardAppExtension<>(
+          BHCSApplication.class,
           ResourceHelpers.resourceFilePath("test_config.yml")
   );
 
@@ -23,11 +25,11 @@ public class HelloWorldApplicationTest {
   public void happyPath() throws Exception {
     given()
       .request()
-      .get("http://localhost:" + EXT.getLocalPort() + "/hello?name=Obama")
+      .get("http://localhost:" + EXT.getLocalPort() + "/address/hello")
     .then()
         .assertThat()
         .statusCode(200)
         .contentType("application/json")
-        .body(containsString("Hello Obama"));
+        .body(containsString("hello!"));
   }
 }

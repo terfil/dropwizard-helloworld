@@ -14,3 +14,22 @@ logging:
     com.github.sullis.dropwizard.helloworld: DEBUG
 
 defaultName: friend
+
+database:
+  driverClass: com.mysql.jdbc.Driver
+  user: root
+  password: admin123
+  url: jdbc:mysql://localhost:3306/bhcs
+  properties:
+    charSet: UTF-8
+    hibernate.dialect: org.hibernate.dialect.MySQLDialect
+  maxWaitForConnection: 1s
+  validationQuery: "SELECT 1"
+  validationQueryTimeout: 3s
+  minSize: 8
+  maxSize: 32
+  checkConnectionWhileIdle: false
+  evictionInterval: 10s
+  minIdleTime: 1 minute
+  checkConnectionOnBorrow: true
+

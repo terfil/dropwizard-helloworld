@@ -8,12 +8,12 @@
     <name>Dropwizard Hello World application</name>
 
     <properties>
-      <dropwizard.version>2.0.16</dropwizard.version>
+      <dropwizard.version>2.0.15</dropwizard.version>
       <junit.version>5.7.0</junit.version>
       <logback.version>1.2.3</logback.version>
       <slf4j.version>1.7.30</slf4j.version>
       <skip.tests>false</skip.tests>
-      <main.class>com.github.sullis.dropwizard.helloworld.HelloWorldApplication</main.class>
+      <main.class>org.bhcs.HelloWorldApplication</main.class>
     </properties>
 
     <dependencies>
@@ -21,6 +21,16 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
             <version>${dropwizard.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-hibernate</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.22</version>
         </dependency>
         <dependency>
             <groupId>io.dropwizard</groupId>
@@ -62,6 +72,16 @@
             <artifactId>assertj-core</artifactId>
             <version>3.18.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.2.2</version>
         </dependency>
     </dependencies>
 
