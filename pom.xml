@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.sullis</groupId>
-    <artifactId>dropwizard-helloworld</artifactId>
+    <artifactId>dropwizard-bhcs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Dropwizard Hello World application</name>
+    <name>Dropwizard BHCS</name>
 
     <properties>
       <dropwizard.version>2.0.15</dropwizard.version>
@@ -13,7 +13,7 @@
       <logback.version>1.2.3</logback.version>
       <slf4j.version>1.7.30</slf4j.version>
       <skip.tests>false</skip.tests>
-      <main.class>org.bhcs.HelloWorldApplication</main.class>
+      <main.class>org.bhcs.BHCSApplication</main.class>
     </properties>
 
     <dependencies>
@@ -87,6 +87,41 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <configuration>
+                    <createDependencyReducedPom>true</createDependencyReducedPom>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.bhcs.BHCSApplication</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

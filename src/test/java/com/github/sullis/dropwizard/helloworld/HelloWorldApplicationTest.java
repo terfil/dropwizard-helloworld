@@ -25,7 +25,7 @@ public class HelloWorldApplicationTest {
   public void happyPath() throws Exception {
     given()
       .request()
-      .get("http://localhost:" + EXT.getLocalPort() + "/address/hello")
+      .get("http://localhost:" + EXT.getLocalPort() + "/hello")
     .then()
         .assertThat()
         .statusCode(200)

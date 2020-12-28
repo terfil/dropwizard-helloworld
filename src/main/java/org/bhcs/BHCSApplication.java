@@ -6,9 +6,9 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.bhcs.configuration.BHCSConfiguration;
-import org.bhcs.dao.AddressDao;
-import org.bhcs.model.Address;
-import org.bhcs.resources.AddressResource;
+import org.bhcs.dao.*;
+import org.bhcs.model.*;
+import org.bhcs.resources.BHCSResource;
 
 public class BHCSApplication
     extends Application<BHCSConfiguration> {
@@ -17,7 +17,7 @@ public class BHCSApplication
         new BHCSApplication().run(args);
     }
 
-    private final HibernateBundle<BHCSConfiguration> hibernateBundle = new HibernateBundle<BHCSConfiguration>(Address.class) {
+    private final HibernateBundle<BHCSConfiguration> hibernateBundle = new HibernateBundle<BHCSConfiguration>(Address.class, Course.class, CourseSummary.class, Timeslot.class, Classroom.class, Member.class) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(BHCSConfiguration bhcsConfiguration) {
             return bhcsConfiguration.getDataSourceFactory();
@@ -33,6 +33,11 @@ public class BHCSApplication
     public void run(BHCSConfiguration configuration,
                     Environment environment) {
         final AddressDao addressDao = new AddressDao(hibernateBundle.getSessionFactory());
-        environment.jersey().register(new AddressResource(addressDao));
+        final CourseDao courseDao = new CourseDao(hibernateBundle.getSessionFactory());
+        final TimeslotDao timeslotDao = new TimeslotDao(hibernateBundle.getSessionFactory());
+        final MemberDao memberDao = new MemberDao(hibernateBundle.getSessionFactory());
+        final CourseSummaryDao courseSummaryDao = new CourseSummaryDao(hibernateBundle.getSessionFactory());
+        final ClassroomDao classroomDao = new ClassroomDao(hibernateBundle.getSessionFactory());
+        environment.jersey().register(new BHCSResource(addressDao, courseDao, courseSummaryDao, timeslotDao, memberDao, classroomDao));
     }
 }
